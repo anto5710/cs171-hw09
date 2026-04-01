@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown Menu Navigation Study</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="overlay">
+    <div class="ov-banner">
+      <div class="study-tag">Usability Research &nbsp;·&nbsp; Within-Subjects Design</div>
+      <h1>Dropdown Menu Navigation Study</h1>
+      <p>Please follow the short setup steps below.</p>
+    </div>
+
+    <div class="ov-card">
+      <div class="ov-dots">
+        <div class="ov-dot active" id="dot-0"></div>
+        <div class="ov-dot" id="dot-1"></div>
+        <div class="ov-dot" id="dot-2"></div>
+        <div class="ov-dot" id="dot-3"></div>
+        <span class="ov-step-lbl" id="step-lbl">Step 1 of 4</span>
+      </div>
+
+      <div class="ov-panel active" id="op-0">
+        <h2>📋 About This Study</h2>
+        <p>This study compares two menu layouts for speed and accuracy. The session takes about <strong>5–7 minutes</strong>.</p>
+        <div class="hbox info"><strong>Your job:</strong> follow the path shown on screen and click the target item as quickly and accurately as possible.</div>
+        <div class="hbox ok"><strong>Privacy:</strong> data is anonymous and tied only to your participant ID. You may stop at any time.</div>
+      </div>
+
+      <div class="ov-panel" id="op-1">
+        <h2>🎯 Task Format</h2>
+        <p>Each trial shows a full path such as <strong>Edit → Copy</strong>. Click the center start button, then follow that path to the final item.</p>
+        <div class="task-grid">
+          <div class="task-card"><div class="task-num">1</div><div><div class="tc-title">Same Start Point</div><div class="tc-desc">Every trial begins from the center.</div></div></div>
+          <div class="task-card"><div class="task-num">2</div><div><div class="tc-title">Timer Start</div><div class="tc-desc">Timing begins when you click Start.</div></div></div>
+          <div class="task-card"><div class="task-num">3</div><div><div class="tc-title">Two Blocks</div><div class="tc-desc">You will complete both menu layouts.</div></div></div>
+          <div class="task-card"><div class="task-num">4</div><div><div class="tc-title">Random Order</div><div class="tc-desc">Menu positions and targets vary across trials.</div></div></div>
+        </div>
+      </div>
+
+      <div class="ov-panel" id="op-2">
+        <h2>✅ Informed Consent</h2>
+        <p>Please read each statement and check the box to confirm your agreement before proceeding.</p>
+        <div class="consent-box">
+          <div class="consent-row"><input type="checkbox" id="c1" onchange="checkConsent()"><label for="c1">I understand this study investigates how menu layout affects navigation speed and accuracy.</label></div>
+          <div class="consent-row"><input type="checkbox" id="c2" onchange="checkConsent()"><label for="c2">I understand my reaction times and click accuracy will be recorded automatically.</label></div>
+          <div class="consent-row"><input type="checkbox" id="c3" onchange="checkConsent()"><label for="c3">I understand participation is voluntary and I may withdraw at any time without penalty.</label></div>
+          <div class="consent-row"><input type="checkbox" id="c4" onchange="checkConsent()"><label for="c4">I understand data is collected anonymously using only a participant ID — no personal information is stored.</label></div>
+          <div class="consent-row"><input type="checkbox" id="c5" onchange="checkConsent()"><label for="c5">I confirm I am <strong>18 years of age or older</strong> and consent to participate in this research.</label></div>
+        </div>
+        <div class="hbox warn">If you have questions, please ask the researcher before clicking “Next”.</div>
+      </div>
+
+      <div class="ov-panel" id="op-3">
+        <h2>🚀 Ready to Begin</h2>
+        <p>Enter your Participant ID below. The order of the two menu layouts is assigned automatically with equal probability.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ov-pid">Participant ID</label>
+            <input id="ov-pid" type="text" placeholder="e.g. P01" oninput="checkLaunch()">
+          </div>
+        </div>
+        <div class="hbox info"><strong>Setup:</strong> best on a laptop or desktop at normal browser zoom.</div>
+      </div>
+    </div>
+
+    <div class="ov-nav">
+      <button class="obtn obtn-out" id="btn-back" onclick="ovBack()" style="display:none">← Back</button>
+      <button class="obtn obtn-blue" id="btn-next" onclick="ovNext()">Next →</button>
+      <button class="obtn obtn-green" id="btn-begin" onclick="beginExp()" style="display:none" disabled>Begin Experiment →</button>
+    </div>
+
+    <div class="ov-footer">Human-Computer Interaction Research Lab &nbsp;·&nbsp; Controlled Menu Experiment</div>
+  </div>
+
+  
+  <div id="experiment-shell" aria-hidden="true">
+    <div class="frame-scale-wrap">
+      <div class="frame-layout minimal-layout" id="frame-layout">
+        <aside class="sr-only-panel" aria-hidden="true">
+          <div id="exp-pid-display">Participant: —</div>
+          <div id="block-status">Block 1 of 2</div>
+          <div id="progress">Practice 0 of 1 · Trial 0 of 8</div>
+          <div id="task-text">Prepare for: Edit → Copy</div>
+          <button class="btn btn-neutral" id="btn-reset" type="button">Reset</button>
+          <button class="btn btn-neutral" id="btn-export" type="button">Export JSON</button>
+          <div id="feedback"></div>
+          <div id="post-status"></div>
+        </aside>
+
+        <main class="stage-panel isolated-stage-panel">
+          <div id="experiment-frame">
+<div class="task-banner" aria-live="polite">
+              <div class="task-banner-label">Target Path</div>
+              <div class="task-banner-text" id="task-banner-text">Edit → Copy</div>
+            </div>
+
+            <div id="stage-root" class="stage-root"></div>
+
+            <div id="start-overlay" class="start-overlay">
+              <div class="start-card">
+                <div class="start-path" id="start-path">Edit → Copy</div>
+                <button class="start-button" id="start-button" type="button">Start Trial</button>
+              </div>
+            </div>
+
+            <div id="transition-overlay" class="transition-overlay hidden">
+              <div class="transition-card">
+                <h2 id="transition-title">Next Block</h2>
+                <p id="transition-text">The next block will now begin.</p>
+                <button class="btn btn-neutral" id="transition-button" type="button">Continue</button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
