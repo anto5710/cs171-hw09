@@ -482,3 +482,36 @@ window.checkLaunch = checkLaunch;
 window.beginExp = beginExp;
 
 updateOverlayStep(0);
+
+
+// ---------- CSV EXPORT ----------
+function exportCSV() {
+  if (!state.results || !state.results.length) return;
+
+  const headers = Object.keys(state.results[0]);
+
+  const csvRows = [
+    headers.join(','),
+    ...state.results.map(row =>
+      headers.map(h => {
+        const val = row[h] ?? '';
+        return `"${val.toString().replace(/"/g, '""')}"`;
+      }).join(',')
+    )
+  ];
+
+  const csvContent = '\uFEFF' + csvRows.join('\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `dropdown_experiment_${state.participantId || 'data'}.csv`;
+
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  URL.revokeObjectURL(url);
+}
