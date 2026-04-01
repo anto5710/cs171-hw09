@@ -195,25 +195,49 @@ td { padding: 8px 10px; border-bottom: 1px solid #ededed; color: #2d2d2d; vertic
 .category-button:hover, .category-button:focus-visible { background: #333; outline: none; }
 .menu-bar.disabled .category-button, .menu-bar.disabled .dropdown-button { pointer-events: none; }
 .dropdown {
-  position: absolute; display: none; background: #fff; border: 1px solid #999; z-index: 8;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #999;
+  z-index: 8;
   box-shadow: 0 6px 14px rgba(0,0,0,.12);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(2px);
+  transition: opacity 90ms ease-out, transform 90ms ease-out, visibility 0ms linear 90ms;
+  will-change: opacity, transform;
 }
-.menu-category:hover > .dropdown,
-.menu-category:focus-within > .dropdown,
-.menu-category.open > .dropdown { display: flex; }
+.menu-category:hover > .dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity 90ms ease-out, transform 90ms ease-out, visibility 0ms linear 0ms;
+}
 .menu-bar.horizontal .dropdown {
-  top: 100%; left: 0; flex-direction: column;
+  top: calc(100% - 1px);
+  left: 0;
 }
 .menu-bar.vertical .dropdown {
-  top: 0; left: 100%; flex-direction: row;
+  top: 0;
+  left: calc(100% - 1px);
 }
 .dropdown-button {
-  width: var(--drop-btn-w); height: var(--drop-btn-h); border: none; border-bottom: 1px solid #eee;
-  background: #fff; color: #111; text-align: left; padding: 0 14px; font-size: 14px; cursor: pointer;
+  width: var(--drop-btn-w);
+  height: var(--drop-btn-h);
+  border: none;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  color: #111;
+  text-align: left;
+  padding: 0 14px;
+  font-size: 14px;
+  cursor: pointer;
   white-space: nowrap;
 }
-.menu-bar.vertical .dropdown-button { border-bottom: none; border-right: 1px solid #eee; }
-.dropdown-button:last-child { border-bottom: none; border-right: none; }
+.dropdown-button:last-child { border-bottom: none; }
 .dropdown-button:hover, .dropdown-button:focus-visible { background: #efefef; outline: none; }
 .start-overlay, .transition-overlay {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
@@ -367,4 +391,15 @@ td { padding: 8px 10px; border-bottom: 1px solid #ededed; color: #2d2d2d; vertic
 #feedback,
 #post-status {
   display: none !important;
+}
+
+
+/* tuned dropdown behavior */
+.menu-category {
+  isolation: isolate;
+}
+.menu-bar,
+.stage-root,
+.dropdown {
+  overflow: visible;
 }
