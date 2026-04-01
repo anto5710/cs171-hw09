@@ -70,3 +70,6 @@ Runtime fix: restored hidden feedback/post-status nodes required by app.js so th
 
 
 Tuning update: dropdowns now use hover-only visibility with a short opacity/transform transition for smoother opening/closing and to avoid sticky focus states. The vertical condition's context list is now vertical as well, while keeping the same item dimensions.
+
+
+CSV export fix: export button and automatic end-of-experiment download now both generate .csv files from state.allResults.

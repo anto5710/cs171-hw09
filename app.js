@@ -351,7 +351,7 @@ async function completeExperiment() {
     document.getElementById('transition-overlay').classList.add('hidden');
   };
   document.getElementById('transition-overlay').classList.remove('hidden');
-  exportData();
+  exportCSV();
   await postResults();
 }
 
@@ -416,12 +416,30 @@ function summarizeByOrientation() {
   return out;
 }
 
-function exportData() {
-  const payload = getExportPayload();
+function exportCSV() {
+  if (!state.allResults || !state.allResults.length) return;
+
+  const headers = Object.keys(state.allResults[0]);
+  const csvRows = [
+    headers.join(','),
+    ...state.allResults.map(row =>
+      headers.map(h => {
+        const val = row[h] ?? '';
+        return `"${val.toString().replace(/"/g, '""')}"`;
+      }).join(',')
+    )
+  ];
+
+  const csvContent = '\uFEFF' + csvRows.join('\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
-  a.download = `${state.participantId || 'participant'}_${state.sessionId}_menu_experiment.json`;
+  a.href = url;
+  a.download = `dropdown_experiment_${state.participantId || 'data'}.csv`;
+  document.body.appendChild(a);
   a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 async function postResults() {
@@ -473,7 +491,7 @@ window.addEventListener('resize', () => {
 
 document.getElementById('start-button').addEventListener('click', beginTrialFromCenter);
 document.getElementById('btn-reset').addEventListener('click', resetExperiment);
-document.getElementById('btn-export').addEventListener('click', exportData);
+document.getElementById('btn-export').addEventListener('click', exportCSV);
 
 window.ovNext = ovNext;
 window.ovBack = ovBack;
