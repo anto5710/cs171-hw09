@@ -73,3 +73,6 @@ Tuning update: dropdowns now use hover-only visibility with a short opacity/tran
 
 
 CSV export fix: export button and automatic end-of-experiment download now both generate .csv files from state.allResults.
+
+
+Repair note: removed the accidental duplicate CSV export block that referenced state.results. Export now correctly uses state.allResults.
