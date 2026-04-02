@@ -345,7 +345,7 @@ async function completeExperiment() {
   document.getElementById('task-text').textContent = 'Experiment complete. Thank you.';
   document.getElementById('start-overlay').classList.add('hidden');
   document.getElementById('transition-title').textContent = 'Experiment Complete';
-  document.getElementById('transition-text').textContent = 'Results are being saved. A local JSON backup is also available.';
+  document.getElementById('transition-text').textContent = 'Your CSV file is downloading automatically.';
   document.getElementById('transition-button').textContent = 'Close Message';
   document.getElementById('transition-button').onclick = () => {
     document.getElementById('transition-overlay').classList.add('hidden');

@@ -76,3 +76,6 @@ CSV export fix: export button and automatic end-of-experiment download now both 
 
 
 Repair note: removed the accidental duplicate CSV export block that referenced state.results. Export now correctly uses state.allResults.
+
+
+End-download fix: the completion overlay now uses an explicit 'Download CSV' button so the final export is triggered by a direct user gesture rather than an automatic call that some browsers may block.
