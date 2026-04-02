@@ -1,6 +1,6 @@
 const TOTAL_STEPS = 4;
 const MEASURED_TRIALS_PER_BLOCK = 8;
-const PRACTICE_TRIALS_PER_BLOCK = 1;
+const PRACTICE_TRIALS_PER_BLOCK = 0;
 const FIXED_VIEWPORT_MIN_W = 1420;
 const FIXED_VIEWPORT_MIN_H = 860;
 const GOOGLE_APPS_SCRIPT_URL = ''; // paste your deployed Apps Script web app URL here
